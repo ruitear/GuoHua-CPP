@@ -506,12 +506,9 @@ void ComArrayMin(int *pArray, int num)
 		stream << pArray[i];
 		stream >> pStrArray[i];
 	}
-
 	sort(pStrArray, pStrArray + num, compare); //×Ö·û´®Êý×éÅÅÐò  
-
 	for (i = 0; i < num; i++)  
 		cout << pStrArray[i];
 	cout << endl;
-
 	delete[] pStrArray;
 }
