@@ -206,7 +206,7 @@ list* mergeList2(list* head1, list* head2)
 			else
 			{
 				mergeHead = head2; 
-				tempNode = mergeHead;head1 = head1->next;
+				tempNode = mergeHead;head2 = head2->next;
 			}
 		}
 	}
