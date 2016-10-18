@@ -192,7 +192,7 @@ list* mergeList2(list* head1, list* head2)
 			else
 			{	
 				mergeHead = head1; 
-				tempNode = mergeHead;
+				tempNode = mergeHead;head1 = head1->next;
 			}
 		}
 		else
@@ -206,7 +206,7 @@ list* mergeList2(list* head1, list* head2)
 			else
 			{
 				mergeHead = head2; 
-				tempNode = mergeHead;
+				tempNode = mergeHead;head1 = head1->next;
 			}
 		}
 	}
@@ -461,7 +461,7 @@ int getUglyNum2(int index)
 	int* pM5 = uglyNums;
 	while (nextUglyIndex < index)
 	{
-		int minNext = minIndex(*pM2, *pM3, *pM5);
+		int minNext = minIndex((*pM2)*2, (*pM3)*3, (*pM5)*5);
 		uglyNums[nextUglyIndex] = minNext;
 
 		while (*pM2*2<=uglyNums[nextUglyIndex])
