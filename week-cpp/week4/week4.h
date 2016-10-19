@@ -260,3 +260,94 @@ int getNumberOfK(int a[], int length, int k)
 	}
 	return count;
 }
+//day3
+//归并排序
+//归并排序是基于分治法（Divide and Conquer）的一个非常典型的应用。将待排序的元素分裂成两个子序列，
+//再将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有
+//序表，称为二路归并。归并过程为：把一个数列拆分成两个子序列，利用这两个子序列对元数组进行归并，也就是通过依次比较
+//两个子序列中的数，然后依次把较小的数插入到原始数组序列中，过程如merge函数中的三个while循环所示：第一个实现依次循
+//环插入较小值，第二个和第三个while循环实现比较完之后的最后一个数的插入。
+void merge(int data[], int left, int mid, int right){
+	int n1 = mid - left + 1;
+	int n2 = right - mid;
+	int* L1 = new int[n1];//拆分出来的L1和L2
+	int* L2 = new int[n2];
+	for (int i = 0; i < n1; ++i){//对L1赋值
+		L1[i] = data[left + i];
+	}
+	for (int i = 0; i < n2; ++i){//对L1赋值
+		L2[i] = data[mid + i + 1];
+	}
+	int i = 0, j = 0;
+	int k = left;
+	while (i<n1&&j<n2){//三个while实现归并过程
+		if (L1[i]<L2[j]) data[k++] = L1[i++];
+		else data[k++] = L2[j++];
+	}
+	while (i<n1) data[k++] = L1[i++];
+	while (j<n2) data[k++] = L2[j++];
+	delete[] L1;
+	delete[] L2;
+}
+void mergeSort(int data[], int left, int right){
+	if (data == NULL || left >= right) return;
+	if (left<right){
+		int mid = (left + right) / 2;
+		mergeSort(data, left, mid);
+		mergeSort(data, mid + 1, right);
+		merge(data, left, mid, right);
+	}
+}
+//只出现一次的数
+//如何找到这个只出现一次的数呢？最基本的遍历当然OK的，那么除了遍历结合这个题目的特性，又能想到那些其他方法呢？
+//举个例子，两个相同的数异或得到的结果是0，不容的数以后得到的结果就不是0，回到题目，除了一个数之外其他的数都是
+//成对出现，那么这一对数异或的结果就是0，是不是已经想到了解决问题的方法？是的，就是利用异或，怎么个异或法呢？
+//遍历数组，让所有的数都依次异或，最后剩下的数肯定就是这个只出现一次的数。
+//出现的一次的数有1个
+void findOneNum(int a[], int length,int* num)
+{
+	if (a == NULL || length<0) return;
+	*num = 0;
+	for (int i = 0; i < length; ++i)
+		*num ^= a[i];
+}
+//出现一次的数有两个
+//有两个出现一次的数，借用刚才第一题的思路，是不是也可以得到一定的启发呢？也利用异或，但是这次有两个异或了，我们
+//怎么保证异或得到结果是这两个数呢？显然整个一次异或是不行的，要是我们能够把这个数组分组使得，这两个只出现一次的
+//恰好分到两个不同的group中，那么是不是就可以利用这个抑或得到我们想要的结果了。那先现在的关键就是怎么样才能把数组
+//划分成我们想要的样子？
+//具体划分：还是利用异或，让数组中的每个数都异或一遍，最后得到一个数，这个数就是两个不同数抑或的结果，根据异或，
+//这个书某一位是1，那么就表示这两个数，这个位是不同的，利用这点我们把数组分组，这个时候你肯定会问了：怎么保证把相
+//等的数不分到两个不同的组中呢？这样说的，相等的数他们每一位都是相同的，我们利用所有数异或之后的结果的某一位是1的
+//这个分组标准，相等的数肯定都是被分到相同的同一个组中的。
+bool isBitOne(int num, unsigned int indexBit)
+{
+	num = num >> indexBit;
+	return (num & 1);
+}
+unsigned int findBitOne(int num)
+{
+	int indexBit = 0;
+	while ((num & 1) == 0 && (indexBit < 8 * sizeof(int)))
+	{
+		num == num >> 1;
+		++indexBit;
+	}
+	return indexBit;
+}
+pair<int, int> findTwoNum(int a[], int length)
+{
+	pair<int, int> twoOr;
+	if (a == NULL || length<2) return twoOr;
+	int numOR = 0;
+	for (int i = 0; i < length; ++i)
+		numOR ^= a[i];
+	unsigned int indexOfOne = findBitOne(numOR);
+	twoOr.first = 0; twoOr.second = 0;
+	for (int i = 0; i < length; ++i)
+	{
+		if (isBitOne(a[i], indexOfOne))twoOr.first ^= a[i];
+		else twoOr.second ^= a[i];
+	}
+	return twoOr;
+}
