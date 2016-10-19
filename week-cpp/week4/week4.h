@@ -330,7 +330,7 @@ unsigned int findBitOne(int num)
 	int indexBit = 0;
 	while ((num & 1) == 0 && (indexBit < 8 * sizeof(int)))
 	{
-		num == num >> 1;
+		num = num >> 1;
 		++indexBit;
 	}
 	return indexBit;
