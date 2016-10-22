@@ -42,6 +42,7 @@ int main()
 	cout << "getNumberOfK:"<<getNumberOfK(a, 9, 6) << endl;
 	cout <<"findNum:"<< findNum(a, 9, 5) << endl;
 
+	//day3
 	//归并排序
 	int arr1[] = { 1, 2, -3, 10, -4, 7, 12, -5 };
 	mergeSort(arr1, 0, 7);
@@ -59,5 +60,27 @@ int main()
 	int aa2[] = { 2, 4, 3, 3, 5,7, 2, 5 };
 	pair<int, int> res = findTwoNum(aa2, 8);
 	cout << "findTwoNum: " << res.first << " " << res.second << endl;
+
+	//day4
+	//数中1的个数
+	cout << "numberOf1: " << numberOf1(10) << "  numberOf11: " << numberOf11(10) << endl;
+	//交换两个数
+	int aNum = 5, bNum = 2;
+	swap1(aNum, bNum);
+	cout << "swap1: a-" << aNum << " b-" << bNum << " ";
+	swap2(&aNum, &bNum);
+	cout << "swap2: a-" << aNum << " b-" << bNum << " ";
+	swap3(aNum, bNum);
+	cout << "swap1: a-" << aNum << " b-" << bNum << " ";
+	swap4(aNum, bNum);
+	cout << "swap2: a-" << aNum << " b-" << bNum << endl;
+
+	//day5
+	myDueqe<int> sInt;
+	sInt.push(1);
+	sInt.push(2); sInt.push(3); sInt.push(4);
+	cout << sInt.top() << endl;
+	sInt.pop(); cout << sInt.top() << endl; sInt.pop(); cout << sInt.top() << endl; sInt.pop(); cout << sInt.top() << endl;
+	//sInt.pop(); cout << sInt.top() << endl;
 	return 0;
 }
