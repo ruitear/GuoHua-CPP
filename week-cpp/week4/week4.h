@@ -241,7 +241,7 @@ int getLastK(int a[], int length, int k)
 				return middle;
 			}
 			else
-				low = middle - 1;
+				low = middle + 1;
 		}
 		else if (a[middle] > k) high = middle - 1;
 		else if (a[middle < k]) low = middle + 1;
@@ -330,7 +330,7 @@ unsigned int findBitOne(int num)
 	int indexBit = 0;
 	while ((num & 1) == 0 && (indexBit < 8 * sizeof(int)))
 	{
-		num == num >> 1;
+		num = num >> 1;
 		++indexBit;
 	}
 	return indexBit;
@@ -350,4 +350,188 @@ pair<int, int> findTwoNum(int a[], int length)
 		else twoOr.second ^= a[i];
 	}
 	return twoOr;
+}
+//day4
+//二进制中的个数
+//统计一个数，二进制表示中有多少个1，利用按位与的方式，下面是两种方法：
+//先说第一种，通过利用1不断与要计算的数的每一位进行&的操作，计数统计
+int numberOf1(int n)
+{
+	int count=0;
+	unsigned int flag = 1;
+	while (flag)
+	{
+		if (n&flag)
+			count++;
+		flag = flag << 1;
+	}
+	return count;
+}
+//一个数与这个数减一之后的&的结果，n&(n-1),相当于减掉数中的一个1，几个例子 10&(10-1) 1010&1001=1000
+//有了这个思路之后，利用一个循环，只要看能进行多少次这样的操作就能得到这个数有多少个1了。
+int numberOf11(int n)
+{
+	int count=0;
+	unsigned int flag = 1;
+	while (n)
+	{
+		++count;
+		n=(n-1)&n;
+	}
+	return count;
+}
+//交换两个数
+//用中间变量的方法-指针&引用
+void swap1(int &a, int &b)
+{
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+void swap2(int* a, int* b)
+{
+	int temp;
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+//不用中间变量的方法-异或&加减
+
+void swap3(int &a, int &b)
+{//不用中间变量，交换两数
+	a = a^b;
+	b = b^a; 
+	a = a^b; 
+}
+void swap4(int &a, int &b)
+{//不用异或，不用中间变量，交换两数
+	a = a - b;
+	b = a + b; 
+	a = b - a; 
+}
+//不用加减乘除做加法运算
+//对于数字的运算，除了加减乘除，想想还有什么的呢？位运算，对吧，但是位运算是对于2进制的，怎么才能把二进制的适应性的用到十进制呢？
+//针对这个题目，分析一下加法的过程，a+b ，有数字相加和进位的这两个过程。利用二进制怎么模拟这个过程呢？二进制中0+0=0，0+1=1,1+0=1,
+//1+1=0;这个跟异或的运算时一样的；那么进位呢？1+1=0的时候要进位也就是结果为10,1向左移动了一位，受到这点启示，我们把两个数按位&，
+//再把得到的结果按位左移一位，然后再这个结果和之前异或的结果相加，相加又是重复刚才的两步，所有就可以用循环或者递归来实现这个过程。
+//循环的解法
+int addNum(int a, int b)
+{
+	int sum, carry;
+	do{
+		sum = a^b;
+		carry = (a&b) << 1;
+		a = sum;
+		b = carry;
+	} while (b != 0);
+	return a;
+}
+//递归的解法
+int addNum1(int a, int b)
+{
+	if (b == 0)
+		return a;
+	int sum = a^ b;
+	int carry = (a&b) << 1;
+	return addNum1(sum, carry);
+}
+//不用加乘除求两个数的平均数
+//(a^b)>>1  其中(a^b)相当于取不同位，>>1相当于除2，a&b相当于取相同为，&的结果解释只要相同位的一半。
+int  averageAB(int a,int b)
+{
+	return ((a&b) + ((a^b) >> 1));
+}
+//day5
+//栈，定义为只允许在表的末端进行插入和删除的线性表。允许插入和删除的一段叫栈顶，不允许插入和删除的一段叫栈底。是一种先进后出的线性表。
+//队列，只允许在表的一端插入，另一端删除的，是一种先进先出的线性表。
+//用两个栈实现队列
+//这里的实现主要用了一个类模板，参考C++ primer 泛型编程的模板和类模板
+//利用两个栈模拟队列，队列主要就是两个操作，一个是入队和出队：用两个栈a,b，一个来模拟入队，另一个模拟出队，当入队是用往栈a中push元素，
+//出队是把栈a中元素都弹出并push到栈a，这个时候先进栈a的元素就到了栈b的顶部，可以保证队列的先进先出了，下面是实现的代码。
+template<typename T>class myDueqe{
+public:
+	myDueqe(void);
+	~myDueqe(void);
+	void push(const T& node);
+	T top();
+	void pop();
+private:
+	stack<T> stack1;
+	stack<T> stack2;
+};
+template <typename T> myDueqe<T>::myDueqe(void)
+{
+}
+
+template <typename T> myDueqe<T>::~myDueqe(void)
+{
+}
+template<typename T>void myDueqe<T>::push( const T& data)
+{
+	stack1.push(data); 
+}
+template<typename T>T myDueqe<T>::top()
+{
+	if (stack2.size() <= 0)
+	{
+		while (stack1.size() > 0)
+		{
+			T& data = stack1.top();
+			stack1.pop();
+			stack2.push(data);
+		}
+	}
+	if (stack2.size() == 0)
+		throw new exception("queue is empty!");
+	return stack2.top();
+}
+template<typename T>void myDueqe<T>::pop()
+{
+	if (top())
+		stack2.pop();
+}
+//这里是用int作为类型的简单实现
+class myDueqeInt{
+public:
+	myDueqeInt(void);
+	~myDueqeInt(void);
+	void push(const int& node);
+	void pop();
+	int top();
+private:
+	stack<int> stack1;
+	stack<int> stack2;
+};
+ myDueqeInt::myDueqeInt(void)
+{
+}
+
+myDueqeInt::~myDueqeInt(void)
+{
+}
+void myDueqeInt::push(const int& data)
+{
+	stack1.push(data);
+}
+void myDueqeInt::pop()
+{
+	if (top())
+		stack2.pop();
+	
+}
+int myDueqeInt::top()
+{
+	if (stack2.size() <= 0)
+	{
+		while (stack1.size() > 0)
+		{
+			const int& data = stack1.top();
+			stack1.pop();
+			stack2.push(data);
+		}
+	}
+	if (stack2.size() == 0)
+		throw new exception("queue is empty!");
+	return stack2.top();
 }
