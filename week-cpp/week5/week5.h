@@ -143,3 +143,108 @@ binaryTreeNode* constructTree(int* preOrder, int* inOrder,int length)
 	
 	constructTree(preOrder, preOrder + length-1, inOrder, inOrder + length-1);
 }
+//day2 
+//字符串替换
+//看到题最直观当然很容易想对吧，从前往后遍历，遇到一个空格就把数组整体后移两位，再放入%RT，也到一个就需要挪动后边多有的。
+//喊个思路，如果我们从后边往前挪是不是会好很多，首先遍历一遍字符串，看看有多少个空格，然后在计算替换之后的字符串是多长，
+//这样从后往前插入是不是效率高了很多，减少了从前往后挪动的过程。
+void replaceSpace(char str[])
+{
+	if (str == NULL) return;
+	int numSpace = 0;
+	int length = 0;
+	int i = 0;
+	while (str[i] != '\0')
+	{
+		++length;
+		if (str[i] == ' ') ++numSpace;
+		++i;
+	}
+	int newLength = length + 2 * numSpace;
+	int indexOri = length;
+	int indexNew = newLength;
+	while (indexOri >= 0 && indexNew > indexOri)
+	{
+		if (str[indexOri] == ' ')
+		{
+			str[indexNew--] = 'T';
+			str[indexNew--] = 'R';
+			str[indexNew--] = '%';
+		}
+		else
+		{
+			str[indexNew--] = str[indexOri];
+		}
+		--indexOri;
+	}
+
+}
+//分层遍历:从上往下打印二叉树
+//这里这要求从上往下遍历，看到题目是不是会纳闷，之前接触的遍历都是基本的前中后序遍历，现在要按层从上往下遍历，对于这个，先来分析一下
+//根节点1是在第一层，首先遍历，它的下一层是它的左右子节点2,3，为了能够遍历到2,3，应该把他们存起来，存到哪呢？我们接着分析，分层是按
+//照从左往右遍历，1完了是2，接着3，也就是2在前边先遍历到，3在后边后遍历到，是不是想到了队列，先进先出的性质？是的，把节点的左右子树
+//依次存到一个队列中，也就是当我们遍历到一个节点的时候就把这个节点的左右子节点入队，最后打印完整个队列的就完成了从上到下的遍历。
+void printTopToBottom(binaryTreeNode* root)
+{
+	if (!root)return;
+	deque<binaryTreeNode*>dequeTree;
+	dequeTree.push_back(root);
+	while (dequeTree.size())
+	{
+		binaryTreeNode* node = dequeTree.front();
+		dequeTree.pop_front();
+		cout << node->data << "-";
+		if (node->left)dequeTree.push_back(node->left);
+		if (node->right)dequeTree.push_back(node->right);
+	}
+}
+//按之字形打印二叉树
+//按之字形打印二叉树，跟上一题中的分层从上到下打印，是很像的问题，不同的是，遍历按树的层数的奇偶，一次轮换从左往右和从右往左
+//按照以的思路，既然分层，我们把每层存到一个容器就行了，用什么容器呢？一个顺着先进后出，一个倒着后进先出，怎么统一呢？是不是
+//比较纠结，二叉树当前层又是上一层的左右子树，你看如果调整左右子树的进入顺序是不是就可以统一到先进先出或者先进后出呢？为了简
+//单起见，这里利用两个栈分别用来存奇数的时候和偶数的层时候节点，在例如第一层只有根节点，根节点的左右子树在第二层，他们是右往
+//左遍历，存入第一个栈，入栈顺序是先左子树后右子树，输出就是从右往左的过程，当遍历到第二层的每个节点的时候，他们的子节点是在
+//三层，从左往右遍历，也就是遍历第二层节点的时候左右子树的入栈顺序是先右后左，这样打印的时候就是从左往右，按照这样的方式依次
+//进行下去，当两个栈都没有元素的时候就停止遍历的？为什么要用两个栈，用一个不行么？答案是很难实现的，那么用一个队列呢？答案是：
+//也是不好操作的！
+void printZhi(binaryTreeNode* root)
+{
+	if (!root)return;
+	stack<binaryTreeNode*> nodeLevel[2];
+	int currentLevel = 0;
+	int nextLevel = 1;
+	nodeLevel[currentLevel].push(root);
+	while (!nodeLevel[0].empty() || !nodeLevel[1].empty())
+	{
+		binaryTreeNode* node = nodeLevel[currentLevel].top();
+		nodeLevel[currentLevel].pop();
+		cout << node->data << "-";
+		if (currentLevel == 0)
+		{
+			if (node->left != NULL)
+			{
+				nodeLevel[nextLevel].push(node->left);
+			}
+			if (node->right != NULL)
+			{
+				nodeLevel[nextLevel].push(node->right);
+			}
+		}
+		else
+		{
+			if (node->right != NULL)
+			{
+				nodeLevel[nextLevel].push(node->right);
+			}
+			if (node->left != NULL)
+			{
+				nodeLevel[nextLevel].push(node->left);
+			}
+		}
+		if (nodeLevel[currentLevel].empty())
+		{
+			currentLevel = 1 - currentLevel;
+			nextLevel =1- nextLevel;
+		}
+	}
+}
