@@ -291,7 +291,7 @@ bool IsBalanced(binaryTreeNode* root, int* pDepth)
 	}
 	return false;
 }
-//这里调用的函数
+//这里调用的函数 。
 bool isBalanceTree2(binaryTreeNode* root)
 {
 	int depth = 0;
