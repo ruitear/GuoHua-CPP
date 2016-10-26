@@ -248,3 +248,52 @@ void printZhi(binaryTreeNode* root)
 		}
 	}
 }
+//day3
+//树的深度
+//关于树的深度，对于只有一个根节点的深度就为1，若根节点只有左子树，就是左子树的深度加1，同样只有右子树的时候，就是右子树深度加1，
+//那多对于既有左子树又有右子树的情况，就是去左右子树最大的深度加1，有了这样的思路递归下去，就很方便了！代码如下：
+int treeDepth(binaryTreeNode* root)
+{
+	if (root==NULL)return 0;
+	int leftDepth = treeDepth(root->left);
+	int rightDepth = treeDepth(root->right);
+
+	return (leftDepth > rightDepth) ? (leftDepth + 1) : (rightDepth + 1);
+}
+//判断一个数是不是平衡二叉树，
+//平衡二叉树的定义：二叉树中任意节点的左右子树的深度相差不超过1，那么那就是一个平衡二叉树。
+//遍历所有节点得到深度差
+bool isBalanceTree(binaryTreeNode* root)
+{
+	if (root == NULL)return true;
+	int left = treeDepth(root->left);
+	int right = treeDepth(root->left);
+	if (abs(left - right) > 1)return false;
+	return isBalanceTree(root->left) && isBalanceTree(root->right);
+}
+//利用二叉树的后序遍历这样的，遍历，当遍历到根节点时他的左右节点有已经遍历过了，只要记住它的左右子树的深度就可以判断当前树是不是平衡二叉树
+bool IsBalanced(binaryTreeNode* root, int* pDepth)
+{
+	if (root == NULL)
+	{
+		*pDepth = 0;
+		return true;
+	}
+	int left, right;
+	if (IsBalanced(root->left, &left)&& IsBalanced(root->left, &right))
+	{
+		int diff = left - right;
+		if (diff <= 1 && diff >= -1)
+		{
+			*pDepth = 1 + (left > right ? left : right);
+			return true;
+		}
+	}
+	return false;
+}
+//这里只便函的函数
+bool isBalanceTree2(binaryTreeNode* root)
+{
+	int depth = 0;
+	return IsBalanced(root, &depth);
+}
