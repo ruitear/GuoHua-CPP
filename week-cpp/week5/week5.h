@@ -297,3 +297,33 @@ bool isBalanceTree2(binaryTreeNode* root)
 	int depth = 0;
 	return IsBalanced(root, &depth);
 }
+//N!末尾0的个数
+//N!中末尾0的个数就是找里面2和5能够凑成多少对，也就是找min(count(2),count(5)),在序列中出现的个数显然2的频率比5高，所以只需要求5有多少个就OK了
+int countN0(int n)
+{
+	int count = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		j = i;
+		while (j % 5 == 0)
+		{
+			count++;
+			j /= 5;
+		}
+	}
+	return count;
+}
+//关于统计5的个数的问题，有一个简单的地推公式，这里证明不说，因为我也证明过，只记着了，此处【尴尬脸】
+//令f（x）表示为末尾0的个数，当0<N<5,f（N!）=0，当N>=5时，f（N!）=k+f（k!）,其中k=n/5；
+//转换成和的形式这样就是f(N!)=[N/5]+[N/5^2]+[N/5^3]+....总存在一个K使得5^K>N,[5^K]=0,这里[N/5]表示不大于N的数中5的倍数贡献一个5，
+//[N/5^2]表示不大于N的数中5^2再贡献一个5，依次类推；
+int countN00(int n)
+{
+	int count = 0;
+	while (n)
+	{
+		count += n / 5;
+		n /= 5;
+	}
+	return count;
+}
