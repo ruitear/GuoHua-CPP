@@ -304,7 +304,7 @@ int countN0(int n)
 	int count = 0;
 	for (int i = 0; i < n; ++i)
 	{
-		j = i;
+		int j = i;
 		while (j % 5 == 0)
 		{
 			count++;
@@ -324,6 +324,51 @@ int countN00(int n)
 	{
 		count += n / 5;
 		n /= 5;
+	}
+	return count;
+}
+//day4
+//二叉树的镜像
+//镜像的问题，我们只要按节点一次交换数的左右子树就可以的了对吧？如下的是一个递归实现的代码：
+void mirrorBinaryTree(binaryTreeNode* root)
+{
+	if (root == NULL)return;
+	if (root->left == NULL&&root->right == NULL)return;
+	binaryTreeNode* temp=root->left;
+	root->left = root->right;
+	root->right = temp;
+	if (root->left)	 mirrorBinaryTree(root->left);
+	if (root->right) mirrorBinaryTree(root->right);
+}
+//对称二叉树
+//判断一个二叉树是不是对称的？看到这个问题想想是不是跟上边二叉树的镜像很像，先把一个二叉树求镜像，然后在通过某种遍历方式（比如，前中后序遍历）
+//看看镜像前后的遍历序列是不是相同的，相同的话就说明是对称的对吧？在这判断的过程中，要注意，当一个二叉树的每个节点的元素值都相同的时候即使不是
+//对称的，得到的遍历序列都是一样的（此处可以画一个示意图），为了避免这种情况出现的问题的，把节点的左右子树的NULL情况考虑进遍历的序列，是不是就
+//可以解决了？当然有一些偶然的情况也会出现镜像前后的遍历序列一样，所以考虑节点的NULL情况是必须得。好了，有了镜像方式的解决，如果不先进行镜像操
+//作，最后直接比较是不是也是可行的呢？那前中后序遍历的中的任意一种，定义一种和他对称的遍历方式，来遍历比较就可以判断这个树是不是对称的了，
+//当然也要考虑在二叉树所有节点相同的情况，同样要比较节点的左右子树的NULL情况。
+//如下给出来，利用前序遍历（根左右），然后定义了一个与前序对称的遍历根右左的方式。
+bool isSymmetrical(binaryTreeNode* root1, binaryTreeNode* root2)
+{
+	if (root1 == NULL&&root2 == NULL)return true;
+	if (root1 == NULL || root2 == NULL)return false;
+	if (root1->data != root2->data)return false;
+	return isSymmetrical(root1->left, root2->right) && isSymmetrical(root1->right, root2->left);
+}
+bool isSymmetricalTree(binaryTreeNode* root)
+{
+	return isSymmetrical(root, root);
+}
+//N!的二进制表示的最低位1的位置
+//在二进制中一个2就是10，判断二进制位是否为0：若为0，可以被2整除，右移一位；若为1，不能被2整除。N!中最后一位1的情况，就可以转换为可以被多少个
+//2整除的问题了，跟day3的问题是不是很像？好了，下面是实现的代码：
+int lowestOne(int n)
+{
+	int count = 0;
+	while (n)
+	{
+		n >>= 1;
+		count += n;
 	}
 	return count;
 }
