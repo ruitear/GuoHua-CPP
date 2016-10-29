@@ -372,3 +372,58 @@ int lowestOne(int n)
 	}
 	return count;
 }
+//day5
+//序列化二叉树
+//序列化的过程中只需要，把在遍历的过程中考虑到树节点的NULL值就就OK。
+void serializeTree(binaryTreeNode* root,ostream& stream)
+{
+	if (root == NULL)
+	{
+		stream << "#,";
+	}
+	stream << root->data << ',';
+	serializeTree(root->left, stream);
+	serializeTree(root->right, stream);
+}
+//反序列化
+//反序列化，就是利用序列化的结果够一棵树；
+bool ReadStream(istream& stream, int* number)
+{
+	if (stream.eof())
+		return false;
+
+	char buffer[32];
+	buffer[0] = '\0';
+
+	char ch;
+	stream >> ch;
+	int i = 0;
+	while (!stream.eof() && ch != ',')
+	{
+		buffer[i++] = ch;
+		stream >> ch;
+	}
+
+	bool isNumeric = false;
+	if (i > 0 && buffer[0] != '$')
+	{
+		*number = atoi(buffer);
+		isNumeric = true;
+	}
+
+	return isNumeric;
+}
+void deserializeTree(binaryTreeNode* root, istream& stream)
+{
+	int num;
+	if (ReadStream(stream, &num))
+	{
+		root = new binaryTreeNode();
+		root->data = num;
+		root->left = NULL;
+		root->right = NULL;
+
+		deserializeTree(root->left, stream);
+		deserializeTree(root->right, stream);
+	}
+}
