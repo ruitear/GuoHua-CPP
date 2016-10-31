@@ -45,4 +45,4 @@
 
 #week5
 <b>day1</b>：1、(问题回顾)菲波那切数列;2、二叉树中和为某一值的路径。下图为，菲波那切数列算术表示：<br>
-<img src="http://www.ruitear.com/github/fib.jpg" width=“60%” height=“60%”><br>
+<img src="http://www.ruitear.com/github/fib.jpg"><br>
