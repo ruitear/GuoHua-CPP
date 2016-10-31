@@ -2,6 +2,6 @@
 
 int main()
 {
-	cout <<"Fibonacci: "<<Fibonacci(100) << "--" << Fibonacci1(100) << endl;
+	cout <<"Fibonacci: "<<Fibonacci(10) << "--" << Fibonacci1(100) << endl;
 	return 0;
 }
