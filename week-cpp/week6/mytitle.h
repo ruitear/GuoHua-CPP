@@ -12,5 +12,6 @@
 #include<set>
 #include<functional>
 #include <fstream>
+#include<list>
 using namespace std;
 #endif

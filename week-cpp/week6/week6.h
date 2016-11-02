@@ -163,12 +163,72 @@ binaryTreeNode* findkNodeBST(binaryTreeNode* root, unsigned int k)
 //day4 
 ////二叉树非递归的前中后序遍历，不用递归，要记住回溯路径，必然需要一个辅助空间来记录遍历过程，这里利用一个辅助栈来完成非递归遍历
 //前序
-//后序
+void visitNode(binaryTreeNode* T)
+{
+	if (T->data)
+		cout << T->data << "-";
+}
+void preOrder(binaryTreeNode *root)
+{
+	stack<binaryTreeNode*> s;
+	binaryTreeNode* p;
+	s.push(root);
+	while (!s.empty())
+	{
+		p = s.top(); s.pop();	visitNode(p);
+		if (p->right != NULL)	s.push(p->right);
+		if (p->left != NULL)	s.push(p->left);
+	}
+}
 //中序
+void inOrder(binaryTreeNode* root)
+{
+	stack<binaryTreeNode*> s;
+	binaryTreeNode* p = root;
+	do{
+		while (p != NULL)
+		{
+			s.push(p);
+			p = p->left;
+		}
+		if (!s.empty())
+		{
+			p = s.top(); s.pop(); visitNode(p);
+			p = p->right;
+		}
+	} while (p != NULL || !s.empty());
+}
+//后序-->这个周末讲
+
 
 
 //圆圈中剩下的数，约瑟夫环问题
-
+int listRemaining(unsigned int n, unsigned int m)
+{
+	if (n < 1 || m < 1) return -1;
+	unsigned int i = 0;
+	list<int>numbers;
+	for (int i = 0; i < n; ++i)
+	{
+		numbers.push_back(i);
+	}
+	list<int>::iterator current = numbers.begin();
+	while (numbers.size()>1)
+	{
+		for (int i = 1; i < m; ++i)
+		{
+			if (current == numbers.end())
+				current = numbers.begin;
+		}
+		list<int>::iterator next = ++current;
+		if (next == numbers.end())
+			next = numbers.begin;
+		--current;
+		numbers.erase(current);
+		current = next;
+	}
+	return *current;
+}
 //day5
 //二叉树的下一个节点
 
