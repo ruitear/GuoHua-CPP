@@ -218,11 +218,11 @@ int listRemaining(unsigned int n, unsigned int m)
 		for (int i = 1; i < m; ++i)
 		{
 			if (current == numbers.end())
-				current = numbers.begin;
+				current = numbers.begin();
 		}
 		list<int>::iterator next = ++current;
 		if (next == numbers.end())
-			next = numbers.begin;
+			next = numbers.begin();
 		--current;
 		numbers.erase(current);
 		current = next;
@@ -231,5 +231,32 @@ int listRemaining(unsigned int n, unsigned int m)
 }
 //day5
 //二叉树的下一个节点
-
-//包含min函数的栈
+struct binaryTreeNode2{
+	int data;
+	binaryTreeNode2* left;
+	binaryTreeNode2* right;
+	binaryTreeNode2* parent;
+};
+binaryTreeNode2* getNextNode(binaryTreeNode2* node)
+{
+	if (node == NULL)return NULL;
+	binaryTreeNode2* nNext = NULL;
+	if (node->right != NULL)
+	{
+		binaryTreeNode2* nNode = node->right;
+		while (nNode->left != NULL) nNode = nNode->left;
+		nNext = nNode;
+	}
+	else if (node->parent != NULL)
+	{
+		binaryTreeNode2* current = node;
+		binaryTreeNode2* nParent = node->parent;
+		while (nParent != NULL&&current == nParent->right)
+		{
+			current = nParent;
+			nParent = nParent->parent;
+		}
+		nNext = nParent;
+	}
+	return nNext;
+}
