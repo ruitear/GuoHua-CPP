@@ -217,6 +217,7 @@ int listRemaining(unsigned int n, unsigned int m)
 	{
 		for (int i = 1; i < m; ++i)
 		{
+			current++;
 			if (current == numbers.end())
 				current = numbers.begin();
 		}
