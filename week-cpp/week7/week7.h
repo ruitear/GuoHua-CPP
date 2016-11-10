@@ -86,3 +86,31 @@ unsigned int sumOneToN1(unsigned int n)
 	cout << !n<<"--"<< (!!n) << endl;
 	return n+f[!!n](n - 1);
 }
+//day3
+//树中给定两个接待女的最低公共祖先
+
+//day4
+//树的子结构
+struct binaryTreeNode{
+	int data;
+	binaryTreeNode* left;
+	binaryTreeNode* right;
+};
+bool hasSubTree(binaryTreeNode* rootA, binaryTreeNode* rootB)
+{
+	bool result = false;
+	if (rootA != NULL&&rootB != NULL)
+	{
+		if (rootA->data == rootB->data) result = isSubTree(rootA, rootB);
+		if (!result) result = hasSubTree(rootA->left, rootB);
+		if (!result) result = hasSubTree(rootA->right, rootB);
+	}
+	return result;
+}
+bool isSubTree(binaryTreeNode* root1, binaryTreeNode* root2)
+{
+	if (root2 == NULL)return true;
+	if (root1 == NULL) return false;
+	if (root1->data != root2->data)return false;
+	return isSubTree(root1->left, root2->left) && isSubTree(root1->right, root2->right);
+}
