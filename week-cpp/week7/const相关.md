@@ -13,13 +13,13 @@ int& them=me；//错误，试图让非常量引用常量<br>
 <b>指针和const</b><br>
 <b>指向常量的指针</b>，不能用来改变其所指对象的值。换言之就是，不能通过指针来修改对象的值，而没有规定那个指针对象的值不能通过其他途径修改。<br>
 <b>常量指针</b>：必须初始化，把*放在const之前，用以说明指针是一个常量<br>
-例如：int num=0; int *const cur= &num ; 那么将一直指向num，此例中，我们从左往右阅读，离cur最近的符号是const，意味着cur本身是一个常量对象，对象的类型由声明的其余部分确定，声明符中的下一个符号是\*，意味着cur是一个常量指针。<br>
+例如：int num=0; int *const cur= &num ; 那么将一直指向num，此例中，我们从左往右阅读，离cur最近的符号是const，意味着cur本身是一个常量对象，对象的类型由声明的其余部分确定，声明符中的下一个符号是\**，意味着cur是一个常量指针。<br>
 这里就要区分顶层const和底层const的区别了；详细内容可以参考primer里面相关介绍，
 顶层const表示指针本身是一个常量，底层const表示指针所指对象是一个常量。<br>
 int me;<br>
-const int* you = &me;// you可变，\*you不可变，此时不能用\*you来修改，但是you可以转向<br>
-int* const you = &me;// you不可变，\*you可变，此时允许\*you来修改其值，但是you不能转向。<br>
-const int* const you = &me;//you不可变，*you也不可变，此时既不能用*you来修改其值，也不能转向
+const int* you = &me;  // you可变，\*you不可变，此时不能用\*you来修改，但是you可以转向<br>
+int* const you = &me;  // you不可变，\*you可变，此时允许\*you来修改其值，但是you不能转向。<br>
+const int* const you = &me;  // you不可变，*you也不可变，此时既不能用*you来修改其值，也不能转向
 <br>
 <b>1</b>.用const修饰函数的参数--const只能修饰输入参数<br>
 如果参数作输出用，不论它是什么数据类型，也不论它采用“指针传递”还是“引用传递”，都不能加const修饰，否则该参数将失去输出功能。因为修饰的参数是不能被改变的！
