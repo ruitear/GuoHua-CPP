@@ -114,3 +114,23 @@ bool isSubTree(binaryTreeNode* root1, binaryTreeNode* root2)
 	if (root1->data != root2->data)return false;
 	return isSubTree(root1->left, root2->left) && isSubTree(root1->right, root2->right);
 }
+//day5 二叉搜索树转换为双向链表
+binaryTreeNode* convert(binaryTreeNode* pRoot)
+{
+	binaryTreeNode* pLastNodeOfList = NULL;//pLastNodeOfList指向已经拍好的链表的最后一个节点
+	convertNode(pRoot, pLastNodeOfList);
+	binaryTreeNode* pHeadOfList = pLastNodeOfList;
+	while (pHeadOfList!=NULL&&pHeadOfList->left!=NULL)
+		pHeadOfList = pHeadOfList->left;//遍历到最小的一个节点作为开始，也就是起始节点
+	return pHeadOfList;
+}
+void convertNode(binaryTreeNode* node, binaryTreeNode* pLastNodeofList)
+{
+	if (node == NULL)return;
+	binaryTreeNode* current = node;
+	if (current->left != NULL)convertNode(current->left, pLastNodeofList);
+	current->left = pLastNodeofList;
+	if (pLastNodeofList != NULL)pLastNodeofList->right = current;
+	pLastNodeofList = current;
+	if (current->right != NULL)convertNode(current->right, pLastNodeofList);
+}
