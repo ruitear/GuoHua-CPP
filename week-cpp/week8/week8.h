@@ -16,7 +16,7 @@ void rotateImage(int** image, int n)
 		int last = n - 1 - i;
 		for (int j = first; j < last;++j)
 		{
-			int offset = i - first;
+			int offset = j - first;
 			int temp = image[first][j];
 			image[first][j]=image[last][last-offset];
 			image[last][last - offset]=image[j][last];
