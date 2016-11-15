@@ -29,6 +29,31 @@ void rotateImage(int** image, int n)
 //到这一瓶1.1g/粒的药？天平只能用一次。
 //称一次怎么差异化这些药丸呢？很简单第一瓶取1颗，第二瓶取2颗，依次类推，直至取到第10瓶的10颗。
 
-//day2 字符串压缩
-//利用字符串出现的次数，编写一个方法实现基本的字符串压缩功能。比如字符串aabcccccaaa会变为a2b1c5a3.
-//若压缩后的字符串没有变短，子返回原先的字符串。
+//day2 二维数组中找数
+//一个二维数组，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。写一个函数，
+//输入一个这样的二维数组和一个整数，判断这个数组中是否含有这个数。
+//用以为数组模拟二位数组
+bool findNum(int* matrix, int rows, int cols, int number)
+{
+	bool isFound = false;
+	if (matrix != NULL&&rows > 0 && cols > 0)
+	{
+		int row = 0;
+		int col=cols - 1;
+		while (row<rows&&col>=0)
+		{
+			if (matrix[row*cols + col] == number)
+			{
+				isFound = true;
+				break;
+			}
+			else if (matrix[row*cols + col]>number)
+				--col;
+			else
+				++row;
+		}
+	}
+	return isFound;
+}
+//智力题
+//有一个8*8的棋盘，其中的一个对角的两个方格被切掉了。现在有31张牌，每张牌恰好可以覆盖两个方格。用着31张牌能不能覆盖整个棋牌？
