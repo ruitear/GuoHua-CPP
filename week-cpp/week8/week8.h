@@ -65,7 +65,7 @@ bool findNum(int* matrix, int rows, int cols, int number)
 //f(42,30)=f(30,12)=f(12,6)=f(6,0)
 int gcd(int x,int y)
 {
-	return (!y)?xgcd(y,x%y);
+	return (!y)?x:gcd(y,x%y);
 }
 //水壶装水
 //有两个水壶，一个能装3升水，一个能装5升；现在要得到4升水，不考虑缺水的问题，且水壶的而形状不规则，没办法得到精确的容量
