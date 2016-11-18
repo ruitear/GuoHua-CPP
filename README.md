@@ -62,4 +62,5 @@
 <b>day1</b>：1、给定一幅N\*N表示的单通道图像，其中每个像素大小为4自己，写一个方法，将图像旋转90度，不利用额外的内存空间？2、有10瓶药丸，其中9瓶装的是1g/粒的药丸，余下的一瓶装有1.1g/粒的药丸。有一个精细的天平，怎么找到这一瓶1.1g/粒的药？天平只能用一次。<br>
 <b>day2</b>：1、一个二维数组，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。写一个函数，输入一个这样的二维数组和一个整数，判断这个数组中是否含有这个数。2、有一个8\*8的棋盘，其中的一个对角的两个方格被切掉了。现在有31张牌，每张牌恰好可以覆盖两个方格。用着31张牌能不能覆盖整个棋牌？<br>
 <b>day3</b>：1、给两个整数，求两个数的最大公约数；2、有两个水壶，一个能装3升水，一个能装5升；现在要得到4升水，不考虑缺水的问题，且水壶的而形状不规则，没办法得到精确的容量。<br>
-<b>day3</b>：1、Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length. Do not allocate extra space for another array, you must do this in place with constant memory. For example, given input array A=[1,1,2]. Your function should return length =2,and A is now [1,2].<br>
+<b>day4</b>：1、【Remove duplicates】Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length. Do not allocate extra space for another array, you must do this in place with constant memory. For example, given input array A=[1,1,2]. Your function should return length =2,and A is now [1,2].<br>
+<b>day5</b>：1、Follow up for "Remove duplicates": What if duplicates are allowed at most twice? For example,given sorted array A=[1,1,1,2,2,3],Your function should return length=5,and A is now [1,1,2,2,3].<br>
