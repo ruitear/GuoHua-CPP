@@ -69,3 +69,106 @@ int gcd(int x,int y)
 }
 //水壶装水
 //有两个水壶，一个能装3升水，一个能装5升；现在要得到4升水，不考虑缺水的问题，且水壶的而形状不规则，没办法得到精确的容量
+//day4
+//删除数组中的重复数
+class Solution {
+public:
+	/**
+	* @param A: a list of integers
+	* @return : return an integer
+	*/
+	int removeDuplicates(vector<int> &nums) {
+		// write your code here
+		int n = nums.size();
+		if (n <= 0)return 0;
+		int index = 0;
+		for (int i = 1; i<n; ++i)
+		{
+			if (nums[i] != nums[index])
+				index = i;
+			else if (nums[i] == nums[index])
+			{
+				nums.erase(nums.begin() + i);
+				--i;
+				n = nums.size();
+			}
+		}
+		return index + 1;
+	}
+};
+int removeDuplicates(vector<int> &nums) {
+	// write your code here
+	int n = nums.size();
+	if (n <= 2)return n;
+	int index = 0;
+	int count=0;
+	for (int i = 1; i<n; ++i)
+	{
+		if (nums[i] != nums[index])
+		{
+			if (count >= 2)
+			{
+				nums.erase(nums.begin() + i - count + 1, nums.begin() + i - 1);
+				index = i - count;
+				n = nums.size();
+			}
+			else{
+				index = i;
+			}
+			count = 0;
+		}
+		else if (nums[i] == nums[index])
+		{
+			count++;
+		}
+	}
+	return n;
+}
+//扔鸡蛋
+//分析：首先试着从10层开始扔，然后是20层，接着30层等等，如果鸡蛋1第一次扔下来（10层）就破了，那么最多扔10层；如果鸡蛋最后一次
+//（100）层才破掉，那么最多扔19次，这样考虑也是可以的，对吧？这样只考虑最坏情况。那么怎么让两个扔的鸡蛋次数更均匀一些呢？也就
+//是两次的负载更均衡一些，也就是不论第一次扔还是最后一次扔，次数都很稳定？这里这样设计了一种扔法：鸡蛋1每多扔一次，鸡蛋2就少扔
+//一次,因此每多扔一次鸡蛋1，就减少鸡蛋2可能需要扔下的次数，例如让鸡蛋1从20层往下仍，然后是30层，此时鸡蛋2可能扔9次，若鸡蛋1再扔
+//一次，就让鸡蛋2扔的次数在减一次降为8次，这时假设鸡蛋从X层开始往下仍，然后再网上增加X-1层，直到到达100层。那么久会有这样一个方
+//程 X+(x-1(x-2)+=...+1=100.得到X=14。也就是我们从14层开始扔，然后是27层，接着39层，依次类推，最差情况要扔14次。这样就平衡了最
+//差问题.
+//day5
+//删除重复数字
+class Solution2 {
+public:
+	/**
+	* @param A: a list of integers
+	* @return : return an integer
+	*/
+	int removeDuplicates(vector<int> &nums) {
+		// write your code here
+		int n = nums.size();
+		if (n <= 2)return n;
+		int index = 0;
+		int count = 0;
+		for (int i = 1; i<n; ++i)
+		{
+			if (nums[i] != nums[index] || i == nums.size() - 1)
+			{
+				if (count >= 2)
+				{
+					if (i != nums.size() - 1)nums.erase(nums.begin() + i - count, nums.begin() + i - 1);
+					else nums.erase(nums.begin() + i - count, nums.begin() + i);
+					index = i - count + 1;
+					n = nums.size();
+					i = index;
+				}
+				else{
+					index = i;
+				}
+				count = 0;
+			}
+			else if (nums[i] == nums[index])
+			{
+				count++;
+				index = i;
+			}
+		}
+		return n;
+	}
+};
