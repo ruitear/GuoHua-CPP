@@ -64,3 +64,6 @@
 <b>day3</b>：1、给两个整数，求两个数的最大公约数；2、有两个水壶，一个能装3升水，一个能装5升；现在要得到4升水，不考虑缺水的问题，且水壶的而形状不规则，没办法得到精确的容量。<br>
 <b>day4</b>：1、"Remove duplicates" Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length. Do not allocate extra space for another array, you must do this in place with constant memory. For example, given input array A=[1,1,2]. Your function should return length =2,and A is now [1,2]. 2、扔鸡蛋问题：有100层高的楼，若从第N层或者更高楼层扔鸡蛋，鸡蛋就会破掉。若从第N层以下就不会破掉，给你两个鸡蛋，请找出N，并要求最差情况下扔鸡蛋的次数为最少。<br>
 <b>day5</b>：1、Follow up for "Remove duplicates": What if duplicates are allowed at most twice? For example,given sorted array A=[1,1,1,2,2,3],Your function should return length=5,and A is now [1,1,2,2,3].<br>
+
+#week9-week14
+<b>boss-work：</b>利用VS、QT和OpenCV编写一个简单GUI应用，实现简单的图像处理（比如：锐化、滤波和分割等）和视频处理任务（例如简单场景的目标跟踪），相关算法代码数据参考中资料相关opencv书籍<b><a href="http://pan.baidu.com/s/1eSPwtR8" target="_blank">资料</a></b>-【提取码：uma5】。</br>
