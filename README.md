@@ -67,3 +67,5 @@
 
 #week9-week14
 <b>boss-work：</b>利用VS、QT和OpenCV编写一个简单GUI应用，实现简单的图像处理（比如：锐化、滤波和分割等）和视频处理任务（例如简单场景的目标跟踪），相关算法代码数据参考中资料相关opencv书籍，【注意】Daedline：2016/12/29.  <b><a href="http://pan.baidu.com/s/1eSPwtR8" target="_blank">资料</a></b>-【提取码：uma5】。</br>
+
+#C++ learning end，No sequel！学习的路走好...
